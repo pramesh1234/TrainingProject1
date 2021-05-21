@@ -9,8 +9,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.famco.trainingproject1.R
 import com.famco.trainingproject1.adapters.BookListAdapter
 import com.famco.trainingproject1.adapters.OnRowClickAdapter
 import com.famco.trainingproject1.databinding.FragmentHomeBinding
@@ -38,6 +40,7 @@ class HomeFragment : Fragment(), OnRowClickAdapter {
         val root: View = binding.root
         val addBookFab = binding.addBook
         addBookFab.setOnClickListener {
+            Navigation.findNavController(root).navigate(R.id.add_book)
 
         }
 
