@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.famco.trainingproject1.RetrofitUtils
 import com.famco.trainingproject1.databinding.FragmentEditBookDialogBinding
-import com.famco.trainingproject1.manager.retrofitApi.PostApi
 import com.famco.trainingproject1.model.Book
 import com.famco.trainingproject1.viewModel.EditBookDialogViewModel
-import retrofit2.Call
 
 class EditBookDialogFragment : DialogFragment() {
 
@@ -41,16 +39,22 @@ class EditBookDialogFragment : DialogFragment() {
             description.setText(it.body)
         })
         updateBtn.setOnClickListener {
-            val book=Book()
+            val book = Book()
 
             if (id != null) {
-                book.userId=1
-                book.id=id
-                book.title=titleEt.text.toString()
-                book.body=description.text.toString()
-                editBookViewModel.hitUpdatePostApi(id,book)
+                book.userId = 1
+                book.id = id
+                book.title = titleEt.text.toString()
+                book.body = description.text.toString()
+                editBookViewModel.hitUpdatePostApi(id, book)
             }
         }
+        editBookViewModel.isUpdateSuccess.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                Toast.makeText(context, "successfully updated", Toast.LENGTH_SHORT).show()
+                dialog?.dismiss()
+            }
+        })
         return root
 
     }

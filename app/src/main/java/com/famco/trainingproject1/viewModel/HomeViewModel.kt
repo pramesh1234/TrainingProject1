@@ -12,6 +12,7 @@ import retrofit2.Response
 private const val TAG = "HomeViewModel"
 
 class HomeViewModel : BaseViewModel() {
+    val isPostDeleted = MutableLiveData<Boolean>()
     val bookList: MutableLiveData<List<Book>> = MutableLiveData<List<Book>>()
     private val postApi: PostApi = RetrofitUtils.getRetrofit().create(PostApi::class.java)
 
@@ -38,6 +39,7 @@ class HomeViewModel : BaseViewModel() {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 if (response.isSuccessful) {
                     Log.e(TAG, "onResponse: successfully delete")
+                    isPostDeleted.value=true
                 }
             }
 

@@ -12,6 +12,7 @@ import retrofit2.Response
 private const val TAG = "EditBookDialogViewModel"
 
 class EditBookDialogViewModel : BaseViewModel() {
+    val isUpdateSuccess=MutableLiveData<Boolean>()
     val bookData: MutableLiveData<Book> by lazy {
         MutableLiveData<Book>()
     }
@@ -38,6 +39,7 @@ class EditBookDialogViewModel : BaseViewModel() {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 if (response.isSuccessful) {
                     Log.e(TAG, "onResponse: successfully updated")
+                    isUpdateSuccess.value=true
                 }
             }
 

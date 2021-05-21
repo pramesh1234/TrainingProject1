@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.famco.trainingproject1.databinding.FragmentProfileBinding
 import com.famco.trainingproject1.viewModel.ProfileViewModel
+import com.famco.trainingproject1.views.base.BaseFragment
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
 
     private lateinit var profileViewModel: ProfileViewModel
     private var _binding: FragmentProfileBinding? = null
@@ -29,9 +26,9 @@ class ProfileFragment : Fragment() {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val logoutBtn=binding.logoutBtn
+        val logoutBtn = binding.logoutBtn
         logoutBtn.setOnClickListener {
-            Toast.makeText(context, "user logged out!!", Toast.LENGTH_SHORT).show()
+            context?.let { it1 -> showAlertDialog(it1,"user logged out") }
         }
         return root
     }

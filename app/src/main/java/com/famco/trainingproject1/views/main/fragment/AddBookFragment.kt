@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.famco.trainingproject1.databinding.FragmentAddBookBinding
 import com.famco.trainingproject1.viewModel.AddBookViewModel
+import com.famco.trainingproject1.views.base.BaseFragment
 
-class AddBookFragment : Fragment() {
+class AddBookFragment : BaseFragment() {
 
     private lateinit var addBookViewModel: AddBookViewModel
     private var _binding: FragmentAddBookBinding? = null
@@ -35,6 +36,13 @@ class AddBookFragment : Fragment() {
         submitBtn.setOnClickListener {
             addBookViewModel.hitAddPostApi(titleEt.text.toString(), description.text.toString())
         }
+        addBookViewModel.showSuccessToast.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                context?.let { it1 -> showToast(it1, "Post added successfully") }
+                titleEt.setText("")
+                description.setText("")
+            }
+        })
         return root
     }
 

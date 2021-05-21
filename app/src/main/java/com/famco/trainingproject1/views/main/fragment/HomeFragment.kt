@@ -1,12 +1,13 @@
 package com.famco.trainingproject1.views.main.fragment
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -18,10 +19,11 @@ import com.famco.trainingproject1.adapters.OnRowClickAdapter
 import com.famco.trainingproject1.databinding.FragmentHomeBinding
 import com.famco.trainingproject1.model.Book
 import com.famco.trainingproject1.viewModel.HomeViewModel
+import com.famco.trainingproject1.views.base.BaseFragment
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment : Fragment(), OnRowClickAdapter {
+class HomeFragment : BaseFragment(), OnRowClickAdapter {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
@@ -39,6 +41,8 @@ class HomeFragment : Fragment(), OnRowClickAdapter {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val addBookFab = binding.addBook
+        val progressBar = binding.postProgressBar
+        progressBar.visibility = View.VISIBLE
         addBookFab.setOnClickListener {
             Navigation.findNavController(root).navigate(R.id.add_book)
 
@@ -51,7 +55,11 @@ class HomeFragment : Fragment(), OnRowClickAdapter {
 
         homeViewModel.bookList.observe(viewLifecycleOwner, Observer {
             adapter?.updateList(it)
+            progressBar.visibility = View.INVISIBLE
+        })
 
+        homeViewModel.isPostDeleted.observe(viewLifecycleOwner, Observer {
+            context?.let { it1 -> showToast(it1, "Post successfully deleted") }
         })
         return root
     }
@@ -71,6 +79,18 @@ class HomeFragment : Fragment(), OnRowClickAdapter {
     }
 
     override fun onDeleteItemClick(id: Int) {
-        homeViewModel.hitDeletePost(id)
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setMessage("Are you sure?")
+        builder.setPositiveButton(
+            "yes"
+        ) { _: DialogInterface, _: Int ->
+            homeViewModel.hitDeletePost(id)
+        }
+        builder.setNegativeButton(
+            "no"
+        ) { dialogInterface: DialogInterface, i: Int ->
+            dialogInterface.cancel()
+        }
+        builder.show()
     }
 }
