@@ -12,18 +12,23 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/add_book"
-            app:destination="@id/navigation_dashboard" />
+            app:destination="@id/navigation_add" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_add"
         android:name="com.famco.trainingproject1.views.main.fragment.AddBookFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add_book" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_profile"
         android:name="com.famco.trainingproject1.views.main.fragment.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.famco.trainingproject1.views.main.fragment.MapsFragment"
+        android:label="@string/title_map"
+        tools:layout="@layout/fragment_maps" />
 </navigation>
