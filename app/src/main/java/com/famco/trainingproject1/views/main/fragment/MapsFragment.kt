@@ -25,6 +25,7 @@ class MapsFragment : BaseFragment(), GoogleMap.OnMarkerClickListener {
             context?.let { getBitmapFromVectorDrawable(it,R.drawable.ic_car) }
         ))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        googleMap.setOnMarkerClickListener(this)
     }
 
 
@@ -50,7 +51,7 @@ class MapsFragment : BaseFragment(), GoogleMap.OnMarkerClickListener {
 
     override fun onMarkerClick(marker: Marker): Boolean {
         if(marker == mMarker) {
-            Toast.makeText(context, "marker clicked" + marker.position, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "marker location " + marker.position, Toast.LENGTH_SHORT).show()
         }
         return true
     }
